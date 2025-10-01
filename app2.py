@@ -53,7 +53,7 @@ def plot_advanced_sunspot_visualizations(df, sunactivity_col='SUNACTIVITY',
         df_20th = df.loc["1900":"2000"]
         if not df_20th.empty:
             # 코드를 작성하시오
-            df_20th = df[(df['YEAR'] >= 1900) & (df['YEAR'] <= 2000)]
+            axs[1, 0].boxplot(df_20th[sunactivity_col], vert=False)
 
     except:
         # 해당 기간 데이터가 없을 경우 예외 처리
@@ -99,15 +99,15 @@ try:
 
     # 사이드바에 파라미터 조절 슬라이더 추가
     # 코드를 작성하시오
+    st.sidebar.title('시각화 파라미터 조절')
 
     # 연도 범위 선택
-    # 코드를 작성하시오
-    year_range = [1764, 1928]
-    filtered_df = st.sidebar.slider(
+    # 코드를 작성하시오    
+    year_range = st.sidebar.slider(
         '연도 범위 선택',
-        min_value=1700,
-        max_value=2088,
-        value=year_range
+        min_value=int(df['YEAR'].min()),
+        max_value=int(df['YEAR'].max()),
+        value=(1764, 1928)
     )
 
 
@@ -116,7 +116,7 @@ try:
         '히스토그램 구간 수',
         min_value=5,
         max_value=100,
-        value=30
+        value=38
     )
 
     # 추세선 차수 조절
@@ -124,7 +124,7 @@ try:
         '추세선 차수',
         min_value=1,
         max_value=5,
-        value=1
+        value=3
     )
 
     # 산점도 점 크기 조절
@@ -141,14 +141,14 @@ try:
     # 코드를 작성하시오
     point_alpha = st.sidebar.slider(
         '산점도 투명도',
-        min_value=0.10,
-        max_value=1.00,
-        value=0.50
+        min_value=0.1,
+        max_value=1.0,
+        value=0.5
     )
 
 
     # 필터링된 데이터
-    # filtered_df = df[(df['YEAR'] >= year_range[0]) & (df['YEAR'] <= year_range[1])]
+    filtered_df = df[(df['YEAR'] >= year_range[0]) & (df['YEAR'] <= year_range[1])]
 
     # 시각화
     if not filtered_df.empty:
