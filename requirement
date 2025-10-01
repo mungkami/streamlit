@@ -1,2 +1,3 @@
-pip install -r matplotlib
-pip install -r scipy
+matplotlib
+scipy
+streamlit
